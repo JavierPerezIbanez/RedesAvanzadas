@@ -24,7 +24,6 @@ mqttClient.on('connect', () => {
 
 // Manejar los mensajes recibidos
 
-
 mqttClient.on('message', function (topic, message){
     console.log('Received message from topic:', topic.toString());
     console.log('Message:', message.toString()); // Mensaje recibido en formato de cadena

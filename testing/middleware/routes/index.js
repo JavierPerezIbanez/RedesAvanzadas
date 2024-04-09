@@ -38,6 +38,7 @@ router.get('/save', function(req, res, next) {
         co2:req.body.co2,
         volatiles:req.body.volatiles,
     }));
+    console.log("mensaje enviado")
     /*mqttClient.publish('temperature', JSON.stringify({
         id_sensor:req.query.id_sensor,
         timestamp:now.now,
