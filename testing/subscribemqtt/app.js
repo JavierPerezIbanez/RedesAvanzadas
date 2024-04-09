@@ -4,7 +4,7 @@ const mqtt = require('mqtt');
 const mqttClient = mqtt.connect('mqtt://localhost:1883');
 
 var topic= [
-    'todos',
+    'all',
     'temperatura',
     'co2',
     'humedad',
