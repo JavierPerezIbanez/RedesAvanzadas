@@ -30,7 +30,7 @@ router.get('/save', function(req, res, next) {
     });
     //Envio de a los topics
     //Por ahora se realiza de tal modo que se envian los datos en un solo publish
-    mqttClient.publish('all', content);
+    mqttClient.publish('all', req.query);
     console.log("Mensaje enviado")
     /*mqttClient.publish('temperature', JSON.stringify({
         id_sensor:req.query.id_sensor,
