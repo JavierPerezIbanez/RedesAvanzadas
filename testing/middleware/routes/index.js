@@ -13,31 +13,24 @@ router.get('/', function(req, res, next) {
 router.get('/save', function(req, res, next) {
     var now = new Date();
     var logfile_name = __dirname+'/../public/logs/' +req.query.id_sensor+ "_"+ now.getFullYear() + "_"+ now.getMonth() + "_" + now.getDate() +'.csv';
+    let content = req.query.id_sensor+';'+now.getTime()+";"+req.query.temperatura+";"+req.query.humedad+";"+req.query.co2+";"+req.query.volatiles;
 
     fs.stat(logfile_name, function(err, stat) {
         if(err == null) {
             console.log('File %s exists', logfile_name);
-            let content = req.query.id_sensor+';'+now.getTime()+";"+req.query.temperatura+";"+req.query.humedad+";"+req.query.co2+";"+req.query.volatiles+"\r\n";
-            append2file(logfile_name, content);
+            append2file(logfile_name, content+"\r\n");
 
         } else if(err.code === 'ENOENT') {
             // file does not exist
-            let content ='id_sensor; timestamp; temperatura; humedad; CO2; volatiles\r\n'+req.query.id_sensor+';'+now.getTime()+";"+req.query.temperatura+";"+req.query.humedad+";"+req.query.co2+";"+req.query.volatiles+"\r\n";
-            append2file(logfile_name, content);
+            let header ='id_sensor; timestamp; temperatura; humedad; CO2; volatiles\r\n';
+            append2file(logfile_name, header+content+"\r\n");
         } else {
             console.log('Some other error: ', err.code);
         }
     });
     //Envio de a los topics
     //Por ahora se realiza de tal modo que se envian los datos en un solo publish
-    mqttClient.publish('all', JSON.stringify({
-        id_sensor:req.query.id_sensor,
-        timestamp:now.now,
-        temperature:req.query.temperatura,
-        humedad:req.query.humedad,
-        co2:req.query.co2,
-        volatiles:req.query.volatiles,
-    }));
+    mqttClient.publish('all', content);
     console.log("Mensaje enviado")
     /*mqttClient.publish('temperature', JSON.stringify({
         id_sensor:req.query.id_sensor,
