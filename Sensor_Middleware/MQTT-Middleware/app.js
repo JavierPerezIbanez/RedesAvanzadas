@@ -65,6 +65,6 @@ app.get('/', (req, res) => {
 });
 
 const PORT = 4001;
-app.listen(PORT, () => {
+app.listen(4001, () => {
   console.log(`Servidor 1 escuchando en el puerto ${PORT}`);
 });
