@@ -10,9 +10,9 @@ router.get('/', function(req, res, next) {
 });
 
 /*GET*/ 
-router.get('/', function(req, res, next) {
+router.get('/save', function(req, res, next) {
     var now = new Date();
-    var logfile_name = __dirname+'/../public/logs/' +req.query.id_sensor+ "_"+ now.getFullYear() + "_"+ now.getMonth() + "_" + now.getDate() +'.csv'
+    var logfile_name = __dirname+'/../public/logs/' +req.query.id_sensor+ "_"+ now.getFullYear() + "_"+ now.getMonth() + "_" + now.getDate() +'.csv';
 
     fs.stat(logfile_name, function(err, stat) {
         if(err == null) {
@@ -38,7 +38,7 @@ router.get('/', function(req, res, next) {
         co2:req.body.co2,
         volatiles:req.body.volatiles,
     }));
-    console.log("mensaje enviado")
+    console.log("Mensaje enviado")
     /*mqttClient.publish('temperature', JSON.stringify({
         id_sensor:req.query.id_sensor,
         timestamp:now.now,
@@ -67,7 +67,7 @@ router.get('/', function(req, res, next) {
 /*
 Cambios con el get es simplemente cambiar el req.query al req.body que de procesar el json ya se encarga express 
 */
-router.post('/',function(req, res, next){
+router.post('/save',function(req, res, next){
     var now = new Date();
     var logfile_name = __dirname+'/../public/logs/' +req.body.id_sensor+ "-"+ now.getFullYear() + "-"+ now.getMonth() + "-" + now.getDate() +'.csv'
 
