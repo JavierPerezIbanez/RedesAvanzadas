@@ -10,7 +10,7 @@ router.get('/', function(req, res, next) {
 });
 
 /*GET*/ 
-router.get('/save', function(req, res, next) {
+router.get('/', function(req, res, next) {
     var now = new Date();
     var logfile_name = __dirname+'/../public/logs/' +req.query.id_sensor+ "_"+ now.getFullYear() + "_"+ now.getMonth() + "_" + now.getDate() +'.csv'
 
@@ -67,7 +67,7 @@ router.get('/save', function(req, res, next) {
 /*
 Cambios con el get es simplemente cambiar el req.query al req.body que de procesar el json ya se encarga express 
 */
-router.post('/save',function(req, res, next){
+router.post('/',function(req, res, next){
     var now = new Date();
     var logfile_name = __dirname+'/../public/logs/' +req.body.id_sensor+ "-"+ now.getFullYear() + "-"+ now.getMonth() + "-" + now.getDate() +'.csv'
 
