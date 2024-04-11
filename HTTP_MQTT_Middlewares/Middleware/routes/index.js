@@ -34,7 +34,7 @@ router.get('/save', function(req, res, next) {
     mqttClient.publish('all',JSON.stringify({
         id_sensor:req.query.id_sensor,
         timestamp:now.getTime(),
-        temperature:req.query.temperatura,
+        temperatura:req.query.temperatura,
         humedad:req.query.humedad,
         co2:req.query.co2,
         volatiles:req.query.volatiles,
@@ -93,7 +93,7 @@ router.post('/save',function(req, res, next){
     mqttClient.publish('all', JSON.stringify({
         id_sensor:req.body.id_sensor,
         timestamp:now.now,
-        temperature:req.body.temperatura,
+        temperatura:req.body.temperatura,
         humedad:req.body.humedad,
         co2:req.body.co2,
         volatiles:req.body.volatiles,

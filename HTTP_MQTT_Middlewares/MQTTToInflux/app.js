@@ -11,8 +11,7 @@ const org = "RA_2";
 const bucket = "DataBucket";
 
 const influxDB = new InfluxDB({ url, token });
-const writeApi = influxDB.getWriteApi(org, bucket)
-writeApi.useDefaultTags();
+const writeApi = influxDB.getWriteApi(org, bucket,'ns')
 
 var topics = [
     'all',
