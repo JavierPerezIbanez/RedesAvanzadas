@@ -5,8 +5,8 @@ const { InfluxDB, Point } = require("@influxdata/influxdb-client");
 const mqttClient = mqtt.connect('mqtt://localhost:1883');
 
 // Data for influxDB insertion
-const url = "http://localhost:9999";
-const token = "rootAPI";
+const url = "http://localhost:8087";
+const token = "LQZlj_wX7MkOThNpHBeozbyT_vOim0aqX2YpqUSoQpimHmqJBK9hoBeo4M08UTQWMU9MtJSRdLEkoj7XNdJIbw==";
 const org = "RA_2";
 const bucket = "DataBucket";
 
