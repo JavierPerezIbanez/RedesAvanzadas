@@ -43,7 +43,7 @@ mqttClient.on('message', (topic, message) => {
     // Crear un punto de datos con la medición 'sensor_data' y los campos correspondientes
     const point = new Point('sensor_data')
         .tag('id_sensor', parsedMessage.id_sensor)
-        .floatField('temperature', parsedMessage.temperatura)
+        .floatField('temperatura', parsedMessage.temperatura)
         .floatField('humedad', parsedMessage.humedad)
         .floatField('co2', parsedMessage.co2)
         .floatField('volatiles', parsedMessage.volatiles)
