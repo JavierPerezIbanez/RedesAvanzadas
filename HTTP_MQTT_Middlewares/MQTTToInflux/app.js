@@ -19,7 +19,7 @@ const url = "http://localhost:8086";
  * @type {string}
  */
 //Consider changing this with a restricted token for security
-const token = "LQZlj_wX7MkOThNpHBeozbyT_vOim0aqX2YpqUSoQpimHmqJBK9hoBeo4M08UTQWMU9MtJSRdLEkoj7XNdJIbw==";
+const token = "-emm_i0-GKQIwOddXxf8DCtmk9zZEiSjvz67iTpPlbcjeW7AtVkHY_by-9l1V0InLD_b_-56k4fR3u9YLthRPA==";
 /**
  * Organization that owns the bucket in which we will insert the data
  * @type {string}
