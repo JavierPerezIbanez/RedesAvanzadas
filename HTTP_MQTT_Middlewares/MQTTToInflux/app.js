@@ -1,18 +1,50 @@
 const mqtt = require('mqtt');
-const { InfluxDB, Point } = require("@influxdata/influxdb-client");
+const {InfluxDB, Point} = require("@influxdata/influxdb-client");
 
-// MQTT Broker Connection
+/**
+ * MQTT Broker Connection
+ * @type {MqttClient}
+ */
 const mqttClient = mqtt.connect('mqtt://localhost:1883');
-
-// Data for influxDB insertion
-const url = "http://localhost:8087";
+//Data used to connect to Influx
+/**
+ * Route where the influxDB is hosted
+ * @type {string}
+ */
+const url = "http://localhost:8086";
+//homeToken
+//const token = "MZYTLWMBmcufR_p-WBAisRUJMCJ2eYMtqOoUO3iXEUY4F4aN1FvApwmfzLI26nH5AcYQIecDr7PYPK3HfKqeUQ==";
+/**
+ * An access token with the highest level of privileges
+ * @type {string}
+ */
+//Consider changing this with a restricted token for security
 const token = "LQZlj_wX7MkOThNpHBeozbyT_vOim0aqX2YpqUSoQpimHmqJBK9hoBeo4M08UTQWMU9MtJSRdLEkoj7XNdJIbw==";
+/**
+ * Organization that owns the bucket in which we will insert the data
+ * @type {string}
+ */
 const org = "RA_2";
+/**
+ * Bucket in which we will insert the data
+ * @type {string}
+ */
 const bucket = "DataBucket";
+/**
+ * The connection to influx
+ * @type {InfluxDB}
+ */
+const influxDB = new InfluxDB({url, token});
+/**
+ * API that only allows writing in the bucket own by the organization
+ * @type {WriteApi}
+ */
+const writeApi = influxDB.getWriteApi(org, bucket)
 
-const influxDB = new InfluxDB({ url, token });
-const writeApi = influxDB.getWriteApi(org, bucket,'ns')
-
+/**
+ * String Array with all the topics to subscribe in the MQTT connection.
+ * @type {string[]}
+ */
 var topics = [
     'all',
     'temperatura',
@@ -21,7 +53,7 @@ var topics = [
     'volatiles',
 ];
 
-// Suscribirse a los topics 'httpRequests' y 'otroTopic'
+// This call subscribe to the defined topics when the MQTT broker is up, it also shows the error in the console
 mqttClient.on('connect', () => {
     mqttClient.subscribe(topics, (err) => {
         if (err) {
@@ -32,22 +64,28 @@ mqttClient.on('connect', () => {
     });
 });
 
-// Manejar los mensajes recibidos
+
+// This function handles all the messages received in the MQTT and try to insert the data in the message to the bucket
+
 mqttClient.on('message', (topic, message) => {
     console.log('Received message from topic:', topic);
     // Convertir el mensaje de cadena JSON a un objeto JavaScript
     const parsedMessage = JSON.parse(message.toString());
     console.log('Parsed message:', parsedMessage); // Objeto JavaScript
-    //Insertamos la logica de inserción en la DB
-    // Crear un punto de datos con la medición 'sensor_data' y los campos correspondientes
-    const point = new Point('sensor_data')
-        .tag('id_sensor', parsedMessage.id_sensor)
-        .floatField('temperatura', parsedMessage.temperatura)
-        .floatField('humedad', parsedMessage.humedad)
-        .floatField('co2', parsedMessage.co2)
-        .floatField('volatiles', parsedMessage.volatiles)
-        .timestamp(new Date());
+    //InfluxDB insertion handler
+    try {
+        //Creates the new point under the specified measurement name with the following tag and fields
+        var point = new Point('sensor_data')
+            .tag('id_sensor', parsedMessage.id_sensor)
+            .floatField('temperatura', parsedMessage.temperatura)
+            .floatField('humedad', parsedMessage.humedad)
+            .floatField('co2', parsedMessage.co2)
+            .floatField('volatiles', parsedMessage.volatiles);
 
-    // Escribir el punto de datos en InfluxDB utilizando el writeApi
-    writeApi.writePoint(point);
+        //Write the point in InfluxDB bucket
+        writeApi.writePoint(point);
+        console.log('Data inserted successfully.');
+    } catch (error) {
+        console.error('Error inserting data into InfluxDB:', error);
+    }
 });

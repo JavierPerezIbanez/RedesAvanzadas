@@ -20,7 +20,6 @@ router.get('/save', function(req, res, next) {
         if(err == null) {
             console.log('File %s exists', logfile_name);
             append2file(logfile_name, content+"\r\n");
-
         } else if(err.code === 'ENOENT') {
             // file does not exist
             let header ='id_sensor; timestamp; temperatura; humedad; CO2; volatiles\r\n';
