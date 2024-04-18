@@ -22,7 +22,7 @@ function getRandomArrayPosition(lenght) {
 }
 
 const options = {
-    hostname: '12.0.0.1',
+    hostname: '127.0.0.1',
     port: 80,
     path: '/save',
     method: 'GET'
