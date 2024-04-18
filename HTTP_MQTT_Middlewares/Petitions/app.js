@@ -21,12 +21,7 @@ function getRandomArrayPosition(lenght) {
     return Math.floor(Math.random() * lenght);
 }
 
-const options = {
-    hostname: '127.0.0.1',
-    port: 80,
-    path: '/save',
-    method: 'GET'
-};
+
 
 function sendReq() {
     const queryParams = {
@@ -36,8 +31,14 @@ function sendReq() {
         humedad: getRandom(0, 200),
         co2: getRandom(0, 500)
     };
+    const options = {
+        hostname: '127.0.0.1',
+        port: 80,
+        path: '/save',
+        method: 'GET'
+    };
 
-    options.path += '?' + querystring.stringify({queryParams})
+    options.path += '?' + querystring.stringify(queryParams)
 
     const req = http.request(options, (res) => {
         console.log(`Estado de la respuesta: ${res.statusCode}`);
