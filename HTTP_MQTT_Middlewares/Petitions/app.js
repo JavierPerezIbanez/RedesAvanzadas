@@ -1,6 +1,6 @@
 const http = require('http');
 const querystring = require('querystring');
-const numReq = process.argv.slice(2);
+
 
 const sensors = [
     '11.1',
@@ -22,8 +22,8 @@ function getRandomArrayPosition(lenght) {
 }
 
 const options = {
-    hostname: '10.100.0.102',
-    port: 4000,
+    hostname: '12.0.0.1',
+    port: 80,
     path: '/save',
     method: 'GET'
 };
@@ -51,6 +51,7 @@ function sendReq() {
     req.end();
 }
 
+var numReq = 1000;
 // Enviar múltiples solicitudes (ajustar la cantidad según las necesidades)
 for (let i = 0; i < numReq; i++) {
     sendReq();
