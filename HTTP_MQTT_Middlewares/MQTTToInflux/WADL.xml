@@ -1,0 +1,33 @@
+<?xml version="1.0" ?>
+<application xmlns="http://wadl.dev.java.net/2009/02">
+    <doc title="MiddlewaretoInflux">
+        API para gestionar los datos recibidos del broker y insertalos en la base de datos de influx
+    </doc>
+    <resources base="http://localhost:8036/">
+        <resource path="/">
+            <method name="GET">
+                <doc>Save sensor data using GET request.</doc>
+                <request>
+                    <param name="id_sensor" style="query" type="xsd:string"/>
+                    <param name="temperatura" style="query" type="xsd:float"/>
+                    <param name="humedad" style="query" type="xsd:float"/>
+                    <param name="co2" style="query" type="xsd:float"/>
+                    <param name="volatiles" style="query" type="xsd:float"/>
+                </request>
+                <response>
+                    <representation mediaType="text/plain"/>
+                </response>
+            </method>
+            <method name="InsertData">
+                <doc>Inserts the data recieved on the databse of influx</doc>
+                <request>
+                    <representation mediaType="application/json"/>
+                </request>
+                <response>
+                    <representation mediaType="text/plain"/>
+                </response>
+            </method>
+        </resource>
+
+    </resources>
+</application>  

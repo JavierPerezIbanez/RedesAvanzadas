@@ -55,5 +55,5 @@ function sendReq() {
 var numReq = 1000;
 // Enviar múltiples solicitudes (ajustar la cantidad según las necesidades)
 for (let i = 0; i < numReq; i++) {
-    sendReq();
+    setTimeout(sendReq,666)
 }
