@@ -48,11 +48,14 @@ function wait(ms) {
 
 var numReq = 1000;
 var tEspera = 15000;
-
-// Enviar múltiples solicitudes (ajustar la cantidad según las necesidades)
-for (let i = 0; i < numReq; i++) {
+// Función asincrónica para enviar las solicitudes de manera secuencial
+async function enviarSolicitudes() {
+  for (let i = 0; i < numReq; i++) {
     console.log('Esperando '+tEspera+' milisegundos...');
-    wait(tEspera).then(() => {
-      sendReq;
-    });
+    await wait(tEspera);
+    sendReq();
+  }
 }
+
+// Llamar a la función para enviar las solicitudes
+enviarSolicitudes().catch(err => console.error(err));
