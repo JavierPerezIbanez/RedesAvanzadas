@@ -42,8 +42,17 @@ function sendReq() {
   req.end();
 }
 
+function wait(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 var numReq = 1000;
+var tEspera = 15000;
+
 // Enviar múltiples solicitudes (ajustar la cantidad según las necesidades)
 for (let i = 0; i < numReq; i++) {
-  setTimeout(sendReq, 60000);
+    console.log('Esperando '+tEspera+' milisegundos...');
+    wait(tEspera).then(() => {
+      sendReq;
+    });
 }
