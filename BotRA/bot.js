@@ -5,6 +5,15 @@ const soap = require('soap');
 const token = '6626788083:AAH37DXg5Zm9dGeodvvVXaha403Axm3xk30'; // Replace with your own bot token
 const bot = new TelegramBot(token, { polling: true });
 const userId =1660238721;
+const Influx = require('influx');
+
+const influx = new Influx.InfluxDB({
+  host: '10.100.0.102:3000',
+  database: 'DataBucket',
+  // Otros detalles de configuración según sea necesario
+});
+
+
 
 // Función para obtener datos del servicio SOAP
 
@@ -26,17 +35,26 @@ async function fetchData() {
     }
 }
 
-const intervalo = 500000;  // 5 mins
+const intervalo = 1000;  // 5 mins
 setInterval(async () => {
     const result = "hola";
     
    
         // Enviar datos a todos los usuarios
-    const users = [/* Lista de IDs de usuarios a los que quieres enviar datos */];
-    bot.sendMessage(userId, "Datos automáticos: "+ result);
+    consultaInfluxYEnviarATelegram(userId);
 }, intervalo);
 
-
+function consultaInfluxYEnviarATelegram(chatId) {
+    influx.query('from(bucket: "DataBucket")|> filter(fn: (r) => r["_measurement"] == "sensor_data") |> filter(fn: (r) => r["_field"] == "co2") |> filter(fn: (r) => r["id_sensor"] == "101.2" or r["id_sensor"] == "11.1" or r["id_sensor"] == "1103.2" or r["id_sensor"] == "112.1" or r["id_sensor"] == "114.1" or r["id_sensor"] == "2103.1") |> aggregateWindow(every: v.windowPeriod, fn: median, createEmpty: false) |> median(column: "_value")').then(result => {
+        // Procesar el resultado de la consulta si es necesario
+        const respuesta = JSON.stringify(result);
+        bot.sendMessage(chatId, respuesta);
+      })
+      .catch(error => {
+        console.error('Error al consultar InfluxDB:', error);
+        bot.sendMessage(chatId, 'Ocurrió un error al consultar InfluxDB');
+      });
+  }
 bot.on('message', async (msg) => {
   const chatId = msg.chat.id;
   const messageText = msg.text;
