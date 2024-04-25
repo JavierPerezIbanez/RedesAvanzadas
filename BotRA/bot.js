@@ -8,7 +8,7 @@ const userId =1660238721;
 const Influx = require('influx');
 
 const influx = new Influx.InfluxDB({
-  host: '10.100.0.102:8086',
+  host: '10.100.0.102',
   database: 'DataBucket',
   // Otros detalles de configuración según sea necesario
 });
