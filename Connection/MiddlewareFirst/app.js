@@ -21,8 +21,11 @@ function getSensors(){
     let fluxQuery= `import "influxdata/influxdb/v1"\n\n v1.tagValues(bucket: "${bucket}", tag: "id_sensor")`
     queryApi.queryRows(fluxQuery, {
         next: (row, tableMeta) =>{
-            const tableObject = tableMeta.toObject(row)
-            console.log(tableObject.toString());
+            const tableObject = tableMeta.toObject(row);
+            var jsonObject=JSON.parse(tableObject);
+            let valor = jsonObject._value;
+
+            console.log(valor)
 
         },
         error:(error) =>{
