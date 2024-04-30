@@ -18,7 +18,7 @@ const queryApi = influxDB.getQueryApi(org);
 var sensors=[];
 
 function getSensors(){
-    let fluxQuery= `v1.tagValues(bucket: ${bucket}, tag: "id_sensor")`
+    let fluxQuery= `import "influxdata/influxdb/v1"\n\n v1.tagValues(bucket: ${bucket}, tag: "id_sensor")`
     queryApi.queryRows(fluxQuery, {
         next: (row, tableMeta) =>{
             const tableObject = tableMeta.toObject(row)
