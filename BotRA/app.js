@@ -1,10 +1,12 @@
 const TelegramBot = require('node-telegram-bot-api');
+const axios = require('axios');
 
 
 const botToken = '6626788083:AAH37DXg5Zm9dGeodvvVXaha403Axm3xk30'; // Replace with your own bot token
 const bot = new TelegramBot(botToken, { polling: true });
 const userId =1660238721;
 const Influx = require('influx');
+const url ="http://10.100.0.102:5001/bot/average"
 const influxToken = "AiIetQMWOVlZ9h6o21LOnpMjYP5KJ016cBx5twWvco9VLN4xdQ5XaF2MQgMvHsorcbAkPIyXP60VtxfBrlUKEQ==";
 /**
  * Organization that owns the bucket in which we will insert the data
@@ -17,13 +19,16 @@ const org = "RA_2";
  */
 const bucket = "DataBucket";
 
-const influx = new Influx.InfluxDB({
+const influx = new InfluxDB({
   host: '10.100.0.102',
   database: bucket,
   token: influxToken
   // Otros detalles de configuración según sea necesario
 });
 
+fetch(url, {
+  method: "GET" // default, so we can ignore
+})
 
 
 // Función para obtener datos del servicio SOAP
@@ -46,10 +51,10 @@ async function fetchData() {
     }
 }
 
-const intervalo = 1000;  // 5 mins
+const intervalo = 30000;  // 5 mins
 setInterval(async () => {
         // Enviar datos a todos los usuarios
-    consultaInfluxYEnviarATelegram(userId);
+    obtenerDatosDelSensor;
 }, intervalo);
 
 function consultaInfluxYEnviarATelegram(chatId) {
@@ -80,3 +85,15 @@ bot.on('message', async (msg) => {
     }
   }
 });
+
+
+async function obtenerDatosDelSensor() {
+  try {
+      const response = await axios.get('http://10.100.0.102:5001/bot/average');
+      console.log('Datos del sensor:', response.data);
+      bot.sendMessage(chatId, 'Datos del sensor:'+ response);
+  } catch (error) {
+      console.error('Error al obtener los datos del sensor:', error);
+  }
+}
+
