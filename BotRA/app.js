@@ -1,5 +1,4 @@
 const TelegramBot = require('node-telegram-bot-api');
-const soap = require('soap');
 
 
 const botToken = '6626788083:AAH37DXg5Zm9dGeodvvVXaha403Axm3xk30'; // Replace with your own bot token
