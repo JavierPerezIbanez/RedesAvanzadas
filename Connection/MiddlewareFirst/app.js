@@ -3,7 +3,7 @@ const {InfluxDB, Point} = require("@influxdata/influxdb-client");
 
 const app = express();
 
-const url = "127.0.0.1:8086";
+const url = "http://localhost:8086";
 //homeToken
 //const token = "MZYTLWMBmcufR_p-WBAisRUJMCJ2eYMtqOoUO3iXEUY4F4aN1FvApwmfzLI26nH5AcYQIecDr7PYPK3HfKqeUQ==";
 
