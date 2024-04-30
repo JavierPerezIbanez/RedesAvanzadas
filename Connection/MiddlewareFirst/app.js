@@ -41,7 +41,7 @@ app.use(function (req, res, next) {
     next()
 })
 
-app.get('/botavarage', (req, res) => {
+app.get('/botaverage', (req, res) => {
 
     getSensors();
     let fluxQuery='from(bucket: "DataBucket") ' +
