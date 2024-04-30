@@ -2,14 +2,26 @@ const TelegramBot = require('node-telegram-bot-api');
 const soap = require('soap');
 
 
-const token = '6626788083:AAH37DXg5Zm9dGeodvvVXaha403Axm3xk30'; // Replace with your own bot token
-const bot = new TelegramBot(token, { polling: true });
+const botToken = '6626788083:AAH37DXg5Zm9dGeodvvVXaha403Axm3xk30'; // Replace with your own bot token
+const bot = new TelegramBot(botToken, { polling: true });
 const userId =1660238721;
 const Influx = require('influx');
+const influxToken = "AiIetQMWOVlZ9h6o21LOnpMjYP5KJ016cBx5twWvco9VLN4xdQ5XaF2MQgMvHsorcbAkPIyXP60VtxfBrlUKEQ==";
+/**
+ * Organization that owns the bucket in which we will insert the data
+ * @type {string}
+ */
+const org = "RA_2";
+/**
+ * Bucket in which we will insert the data
+ * @type {string}
+ */
+const bucket = "DataBucket";
 
 const influx = new Influx.InfluxDB({
   host: '10.100.0.102',
-  database: 'DataBucket',
+  database: bucket,
+  token: influxToken
   // Otros detalles de configuración según sea necesario
 });
 
@@ -37,9 +49,6 @@ async function fetchData() {
 
 const intervalo = 1000;  // 5 mins
 setInterval(async () => {
-    const result = "hola";
-    
-   
         // Enviar datos a todos los usuarios
     consultaInfluxYEnviarATelegram(userId);
 }, intervalo);
