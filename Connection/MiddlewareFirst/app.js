@@ -22,7 +22,8 @@ function getSensors(){
     queryApi.queryRows(fluxQuery, {
         next: (row, tableMeta) =>{
             const tableObject = tableMeta.toObject(row)
-            console.log(tableObject)
+            console.log(tableObject.toString());
+
         },
         error:(error) =>{
             console.error(error)
