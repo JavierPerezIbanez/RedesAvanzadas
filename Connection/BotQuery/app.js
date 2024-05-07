@@ -8,7 +8,7 @@ const url = "http://localhost:8086";
 //const token = "MZYTLWMBmcufR_p-WBAisRUJMCJ2eYMtqOoUO3iXEUY4F4aN1FvApwmfzLI26nH5AcYQIecDr7PYPK3HfKqeUQ==";
 
 //Consider changing this with a restricted token for security
-const token = "NXTnCoMAevpKuQJq3W86By-OXMbAeE7QRPPGUNpYt2JHVS9N240I9-YibNOn_6RODMUctdaxsZ-W_1YlGG-J_w==";
+const token = "UHt34RryJY09lbsWFXCdra_9ujVbBpterQE3LUleseDsllj4_lAaXLzT5c3f5eFpiOr5rxRi39WRcUIu1ODTBA==";
 const org = "RA_2";
 const bucket = "DataBucket";
 const influxDB = new InfluxDB({url, token});
