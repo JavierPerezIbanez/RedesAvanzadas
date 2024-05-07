@@ -34,6 +34,9 @@ bot.on('message', async (msg) => {
   if (messageText === '/start') {
     bot.sendMessage(chatId, 'Welcome to the bot!');
   }
+  if (messageText === '/average') {
+    obtenerDatosDelSensor();
+  }
 });
 
 
