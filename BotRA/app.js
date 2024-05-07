@@ -45,8 +45,8 @@ bot.on('message', async (msg) => {
       console.error('Error al obtener los datos del sensor:', error);
   }
   if (messageText === '/prueba') {
-    const msn = obtenerDatosDelSensor();
-    bot.sendMessage(chatId, msn);
+    obtenerDatosDelSensor(chatId);
+
   }
 
 
@@ -54,16 +54,14 @@ bot.on('message', async (msg) => {
 });
 
 
-async function obtenerDatosDelSensor() {
-  const mssg = "";
+async function obtenerDatosDelSensor(chatId) {
   try {
       const response = await axios.get('http://10.100.0.102:5001/botaverage');
       console.log('Datos del sensor:', response.data);
       mssg = JSON.stringify(response.data);
-      
+      bot.sendMessage(chatId, msn);
   } catch (error) {
       console.error('Error al obtener los datos del sensor:', error);
   }
-  return mssg;
 }
 
