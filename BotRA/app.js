@@ -4,7 +4,7 @@ const axios = require('axios');
 
 const botToken = '6626788083:AAH37DXg5Zm9dGeodvvVXaha403Axm3xk30'; // Replace with your own bot token
 const bot = new TelegramBot(botToken, { polling: true });
-const userId =-1001002032292255;
+const userId =1660238721;
 
 const url ="http://10.100.0.102:5001/bot/average"
 
@@ -19,7 +19,7 @@ fetch(url, {
 
 
 
-const intervalo = 30000;  // 5 mins
+const intervalo = 5000;  // 5 mins
 setInterval(async () => {
         // Enviar datos a todos los usuarios
     obtenerDatosDelSensor;
