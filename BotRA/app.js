@@ -5,7 +5,7 @@ const axios = require('axios');
 const botToken = '6626788083:AAH37DXg5Zm9dGeodvvVXaha403Axm3xk30'; // Replace with your own bot token
 const bot = new TelegramBot(botToken, { polling: true });
 const userId =1660238721;
-const groupId = -1004240904454;
+const groupId = -4240904454;
 
 const url ="http://10.100.0.102:5001/bot/average"
 
@@ -36,7 +36,7 @@ bot.on('message', async (msg) => {
     bot.sendMessage(chatId, 'Welcome to the bot!');
   }
   if (messageText === '/average') {
-    obtenerDatosDelSensor();
+    bot.sendMessage(chatId, obtenerDatosDelSensor());
   }
 });
 
@@ -46,7 +46,7 @@ async function obtenerDatosDelSensor() {
       const response = await axios.get('http://10.100.0.102:5001/botaverage');
       console.log('Datos del sensor:', response.data);
       //const msn = JSON.stringify(response.data);
-      bot.sendMessage(groupId, 'Datos del sensor:'+ response.data.temperatura);
+      return response.data.temperatura
   } catch (error) {
       console.error('Error al obtener los datos del sensor:', error);
   }
