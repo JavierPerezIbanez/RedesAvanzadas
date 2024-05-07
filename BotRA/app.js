@@ -43,12 +43,10 @@ bot.on('message', async (msg) => {
       bot.sendMessage(chatId, msn);
     } catch (error) {
       console.error('Error al obtener los datos del sensor:', error);
+    }
   }
   if (messageText === '/prueba') {
     obtenerDatosDelSensor(chatId);
-
-  }
-
 
   }
 });
