@@ -1,7 +1,6 @@
 const express = require('express');
 const httpProxy = require('http-proxy');
-const CronJob = require('cron');
-
+const { CronJob } = require('cron');
 const app = express();
 const proxy = httpProxy.createProxyServer();
 
