@@ -39,7 +39,7 @@ bot.on('message', async (msg) => {
 
 async function obtenerDatosDelSensor() {
   try {
-      const response = await axios.get('http://10.100.0.102:5001/bot/average');
+      const response = await axios.get('http://10.100.0.102:5001/botaverage');
       console.log('Datos del sensor:', response.data);
       bot.sendMessage(userId, 'Datos del sensor:'+ response);
   } catch (error) {
