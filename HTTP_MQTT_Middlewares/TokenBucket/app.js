@@ -50,7 +50,7 @@ const rateLimitMiddleware = (req, res, next) => {
 app.use(rateLimitMiddleware);
 
 // Cron job to periodically refill the bucket
-const job = CronJob.from('*/2 * * * * *', () => {
+const job = new CronJob('*/2 * * * * *', () => {
     refillBucket();
 });
 app.all('*', (req, res) => {
