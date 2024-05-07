@@ -13,7 +13,7 @@ const mqttClient = mqtt.connect('mqtt://localhost:1883');
  */
 const url = "http://localhost:8086";
 //homeToken
-const token = "NXTnCoMAevpKuQJq3W86By-OXMbAeE7QRPPGUNpYt2JHVS9N240I9-YibNOn_6RODMUctdaxsZ-W_1YlGG-J_w==";
+const token = "UHt34RryJY09lbsWFXCdra_9ujVbBpterQE3LUleseDsllj4_lAaXLzT5c3f5eFpiOr5rxRi39WRcUIu1ODTBA==";
 /**
  * An access token with the highest level of privileges
  * @type {string}
