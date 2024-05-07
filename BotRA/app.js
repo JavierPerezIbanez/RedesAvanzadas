@@ -45,7 +45,7 @@ bot.on('message', async (msg) => {
       console.error('Error al obtener los datos del sensor:', error);
   }
   if (messageText === '/prueba') {
-    const msn = obtenerDatosDelSensor()
+    const msn = obtenerDatosDelSensor();
     bot.sendMessage(chatId, msn);
   }
 
