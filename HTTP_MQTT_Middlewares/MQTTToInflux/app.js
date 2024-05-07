@@ -13,13 +13,13 @@ const mqttClient = mqtt.connect('mqtt://localhost:1883');
  */
 const url = "http://localhost:8086";
 //homeToken
-//const token = "MZYTLWMBmcufR_p-WBAisRUJMCJ2eYMtqOoUO3iXEUY4F4aN1FvApwmfzLI26nH5AcYQIecDr7PYPK3HfKqeUQ==";
+const token = "NXTnCoMAevpKuQJq3W86By-OXMbAeE7QRPPGUNpYt2JHVS9N240I9-YibNOn_6RODMUctdaxsZ-W_1YlGG-J_w==";
 /**
  * An access token with the highest level of privileges
  * @type {string}
  */
 //Consider changing this with a restricted token for security
-const token = "AiIetQMWOVlZ9h6o21LOnpMjYP5KJ016cBx5twWvco9VLN4xdQ5XaF2MQgMvHsorcbAkPIyXP60VtxfBrlUKEQ==";
+//const token = "AiIetQMWOVlZ9h6o21LOnpMjYP5KJ016cBx5twWvco9VLN4xdQ5XaF2MQgMvHsorcbAkPIyXP60VtxfBrlUKEQ==";
 /**
  * Organization that owns the bucket in which we will insert the data
  * @type {string}
