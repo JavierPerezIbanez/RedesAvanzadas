@@ -4,7 +4,7 @@ const axios = require('axios');
 
 const botToken = '6626788083:AAH37DXg5Zm9dGeodvvVXaha403Axm3xk30'; // Replace with your own bot token
 const bot = new TelegramBot(botToken, { polling: true });
-const userId =1660238721;
+const userId =-1001002032292255;
 const Influx = require('influx');
 const url ="http://10.100.0.102:5001/bot/average"
 const influxToken = "AiIetQMWOVlZ9h6o21LOnpMjYP5KJ016cBx5twWvco9VLN4xdQ5XaF2MQgMvHsorcbAkPIyXP60VtxfBrlUKEQ==";
