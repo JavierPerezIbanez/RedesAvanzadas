@@ -44,8 +44,7 @@ async function obtenerDatosDelSensor() {
   try {
       const response = await axios.get('http://10.100.0.102:5001/botaverage');
       console.log('Datos del sensor:', response.data);
-      const msn = JSON.stringify(response);
-      bot.sendMessage(userId, 'Datos del sensor:'+ msn);
+      bot.sendMessage(userId, 'Datos del sensor:'+ response.data);
   } catch (error) {
       console.error('Error al obtener los datos del sensor:', error);
   }
