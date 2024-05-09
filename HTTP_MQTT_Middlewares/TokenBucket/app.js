@@ -4,7 +4,6 @@ const { CronJob } = require('cron');
 const app = express();
 const proxy = httpProxy.createProxyServer();
 
-// List of server instances to balance requests
 const haProxyPort = 4000;
 
 const RATE_LIMIT = 10;
@@ -63,6 +62,7 @@ const PORT = 3999;
 app.listen(PORT, () => {
     console.log('TokenBucket');
     console.log(`TokenBucket escuchando en el puerto ${PORT}`);
+    job.start();
 });
 
 module.exports = app;
