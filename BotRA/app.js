@@ -5,8 +5,7 @@ const axios = require('axios');
 const botToken = '6626788083:AAH37DXg5Zm9dGeodvvVXaha403Axm3xk30'; // Replace with your own bot token
 const bot = new TelegramBot(botToken, { polling: true });
 const urlAverage ="http://10.100.0.102:5001/botaverage";
-const urlSend ="http://10.100.0.102:5001";
-const urlActual ="http://10.100.0.102:5001";
+
 
 
 /*
@@ -56,11 +55,19 @@ async function obtenerDatosDelSensor(chatId) {
 }
 
 async function obtenerDatosDelSensorUltimosSeg(chatId, segs){
-
+  axios.post(urlAverage+"?timeInSeconds="+segs);
+  try {
+    const response = await axios.get(urlAverage);
+    console.log('Datos del sensor:', response.data);
+    const msn = JSON.stringify(response.data);
+    bot.sendMessage(chatId, "Datos de los ultimos "+segs+" segundos" + msn);
+} catch (error) {
+    console.error('Error al obtener los datos del sensor:', error);
+}
 }
 async function obtenerUltimoDatoVariable(chatId, variable){
   const response = await axios.get(urlAverage);
-  console.log('Datos del sensor:', response.data);
+  console.log('Datos del sensor:', response.data.variable);
   const msn = JSON.stringify(response.data.variable);
   bot.sendMessage(chatId, msn);
 }
