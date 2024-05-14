@@ -51,6 +51,26 @@ app.use(function (req, res, next) {
     next()
 })
 
+app.get('/lastvalues',async function(req, res) {
+    var querys;
+
+    if(timeInSeconds){
+        querys= prepareQuerys(timeInSeconds);
+    }else {
+        querys= prepareQuerys(timeInterval);
+    }
+    processQuery(querys.temperatura,"temperatura");
+    processQuery(querys.humedad,"humedad");
+    processQuery(querys.co2,"co2");
+    processQuery(querys.volatiles,"volatiles");
+    //Falta que sea sincrono
+    await new Promise((resolve) => {
+        setTimeout(() => {
+            resolve('resolved');
+        }, 40);
+    });
+    res.send(avg);
+});
 app.get('/botaverage',async function(req, res) {
     const timeInSeconds=req.query.timeinseconds;
     var querys;
