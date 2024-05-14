@@ -31,7 +31,7 @@ bot.on('message', async (msg) => {
     mostrarMenu(chatId);
   }else if (messageText.startsWith('/average_')){
     const aux = messageText.split('_');
-    const segs= parseInt(aux[1]);
+    const segs= aux[1];
     obtenerDatosDelSensorUltimosSeg(chatId,segs);
   }else if (messageText === '/actual_'){
     const aux = messageText.split('_');
