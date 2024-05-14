@@ -46,7 +46,7 @@ bot.on('message', async (msg) => {
 async function obtenerDatosDelSensor(chatId) {
   try {
       const response = await axios.get(urlAverage);
-      console.log('Datos del sensor:', response.data);
+      console.log('Datos del sensor: ', response.data);
       const msn = JSON.stringify(response.data);
       bot.sendMessage(chatId, msn);
   } catch (error) {
