@@ -57,8 +57,7 @@ async function obtenerDatosDelSensor(chatId) {
 async function obtenerDatosDelSensorUltimosSeg(chatId, segs){
 
   try {
-    await axios.post(urlAverage+"?timeinseconds=10");
-    const response = await axios.get(urlAverage);
+    const response =await axios.post(urlAverage,{timeinseconds : '10'});
     console.log('Datos del sensor:', response.data);
     const msn = JSON.stringify(response.data);
     bot.sendMessage(chatId, "Datos de los ultimos "+segs+" segundos" + msn);
