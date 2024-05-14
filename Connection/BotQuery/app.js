@@ -1,5 +1,6 @@
 const express = require('express');
 const {InfluxDB, Point} = require("@influxdata/influxdb-client");
+const e = require("express");
 
 const app = express();
 
@@ -51,7 +52,14 @@ app.use(function (req, res, next) {
 })
 
 app.get('/botaverage',async function(req, res) {
-    var querys= prepareQuerys();
+    const timeInSeconds=req.query.timeinseconds;
+    var querys;
+    
+    if(timeInSeconds){
+        querys= prepareQuerys(timeInSeconds);
+    }else {
+        querys= prepareQuerys(timeInterval);
+    }
     processQuery(querys.temperatura,"temperatura");
     processQuery(querys.humedad,"humedad");
     processQuery(querys.co2,"co2");
@@ -64,6 +72,7 @@ app.get('/botaverage',async function(req, res) {
     });
     res.send(avg);
 });
+
 let avg={"temperatura":0,"humedad":0,"co2":0,"volatiles":0};
 function updateData(value,type) {
     console.log(value);
@@ -107,9 +116,9 @@ function processQuery(query,type){
     console.log(sum/count)*/
 
 }
-function prepareQuerys(){
+function prepareQuerys(time){
     let baseQuery='from(bucket: "DataBucket") ' +
-        `|> range(start: -${timeInterval}) ` +
+        `|> range(start: -${time}) ` +
         '|> filter(fn: (r) => r["_measurement"] == "sensor_data") ';
 
     let fluxQuery1=baseQuery+'|> filter(fn: (r) => r["_field"] == "co2") |> filter(fn: (r) => ';
