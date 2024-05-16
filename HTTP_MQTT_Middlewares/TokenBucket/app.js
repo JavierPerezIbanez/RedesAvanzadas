@@ -12,6 +12,7 @@ const RATE_LIMIT = 10;
 const tokenBucket = [];
 
 const ips = ['127.0.0.1', '10.0.2.10', '10.0.2.11-10.0.2.13'];
+app.use(ipfilter(ips,{mode: 'allow'}));
 // Function to refill the bucket
 const refillBucket = () => {
     if (tokenBucket.length < RATE_LIMIT) {
@@ -61,7 +62,7 @@ app.all('*', (req, res) => {
 
 
 const PORT = 3999;
-app.use(ipfilter(ips,{mode: 'allow'}));
+
 app.listen(PORT, () => {
     console.log('TokenBucket');
     console.log(`TokenBucket escuchando en el puerto ${PORT}`);
