@@ -58,6 +58,7 @@ const job = new CronJob('*/2 * * * * *', () => {
 
 app.all('*',ipfilter(ips, {mode: 'allow'}) ,(req, res) => {
     const target = `http://localhost:${haProxyPort}`;
+    console.log(req.ip);
     proxy.web(req, res, { target });
 });
 
