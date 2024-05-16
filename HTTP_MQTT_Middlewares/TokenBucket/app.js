@@ -55,8 +55,8 @@ app.use(rateLimitMiddleware);
 const job = new CronJob('*/2 * * * * *', () => {
     refillBucket();
 });
-app.use(ipfilter(ips, {mode: 'allow'}));
-app.all('*', (req, res) => {
+
+app.all('*',ipfilter(ips, {mode: 'allow'}) ,(req, res) => {
     const target = `http://localhost:${haProxyPort}`;
     proxy.web(req, res, { target });
 });
