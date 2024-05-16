@@ -11,8 +11,8 @@ const RATE_LIMIT = 10;
 
 const tokenBucket = [];
 
-const ips = ['127.0.0.1', '10.0.2.10', '10.0.2.11','10.0.2.13', '10.0.2.13'];
-app.use(ipfilter(ips,{mode: 'deny'}));
+var ips = function() { return ['127.0.0.1']; };
+
 // Function to refill the bucket
 const refillBucket = () => {
     if (tokenBucket.length < RATE_LIMIT) {
@@ -55,6 +55,7 @@ app.use(rateLimitMiddleware);
 const job = new CronJob('*/2 * * * * *', () => {
     refillBucket();
 });
+app.use(ipfilter(ips, {mode: 'allow'}));
 app.all('*', (req, res) => {
     const target = `http://localhost:${haProxyPort}`;
     proxy.web(req, res, { target });
