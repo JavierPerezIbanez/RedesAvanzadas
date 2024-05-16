@@ -1,7 +1,7 @@
 const express = require('express');
 const httpProxy = require('http-proxy');
 const { CronJob } = require('cron');
-const ipfilter=require('express-ipfilter').IpFilter;
+const ipfilter=require('ipfilter')
 const app = express();
 const proxy = httpProxy.createProxyServer();
 
@@ -11,7 +11,7 @@ const RATE_LIMIT = 10;
 
 const tokenBucket = [];
 
-var ips = function() { return ['127.0.0.1']; };
+var ips = ['127.0.0.1','10.0.2.10','10.0.2.11','10.0.2.12','10.0.2.13'];
 
 // Function to refill the bucket
 const refillBucket = () => {
