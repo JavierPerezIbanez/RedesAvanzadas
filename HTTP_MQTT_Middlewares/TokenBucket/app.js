@@ -7,7 +7,7 @@ const proxy = httpProxy.createProxyServer();
 
 const haProxyPort = 4000;
 
-const RATE_LIMIT = 10;
+const RATE_LIMIT = 600;
 
 const tokenBucket = [];
 
