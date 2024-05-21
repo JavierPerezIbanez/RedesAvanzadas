@@ -71,7 +71,7 @@ async function obtenerUltimoDatoVariable(chatId, variable){
   try {
     const msn="";
     const response = await axios.get(urlLast);
-    if (variable.equals("co2")){
+    if (variable === "co2"){
       msn = JSON.stringify(response.data.co2);
     }
     /*console.log('Datos del sensor:', response.data.variable);
