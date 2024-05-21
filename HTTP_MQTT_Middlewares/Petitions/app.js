@@ -1,7 +1,7 @@
 const http = require("http");
 const querystring = require("querystring");
 
-const sensors = ["11.1", "101.2", "112.1", "2103.1", "1103.2", "114.1"];
+const sensors = ["nodo_1","nodo_2","nodo_3"];// ["11.1", "101.2", "112.1", "2103.1", "1103.2", "114.1"];
 
 // Generate a random number between a range
 function getRandom(min, max) {
@@ -16,10 +16,10 @@ function getRandomArrayPosition(lenght) {
 function sendReq() {
   const queryParams = {
     id_sensor: sensors[getRandomArrayPosition(sensors.length)],
-    temperatura: getRandom(0, 100),
-    volatiles: getRandom(0, 3),
-    humedad: getRandom(0, 200),
-    co2: getRandom(0, 500),
+    temperatura: getRandom(20, 30),
+    volatiles: getRandom(0, 100),
+    humedad: getRandom(40, 60),
+    co2: getRandom(350, 5000),
   };
   const options = {
     hostname: "127.0.0.1",
