@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application xmlns="http://wadl.dev.java.net/2009/02">
+    <doc title="BotQuery">
+        Middleware para recoger los datos de las peticiones del bot de telegram.
+    </doc>
+    <resources base="http://localhost:5001/">
+        <resource path="/lastvalues">
+            <method name="GET">
+            <doc>Gets the last values of all the sensors</doc>
+                <response>
+                    <option value="json" representation mediaType="avg/json"/>
+                </response>
+            </method>
+        </resource>
+        <resource path="/botaverage">
+            <method name="GET">
+                <doc>Gets the average of all the sensors</doc>
+                <response>
+                    <option value="json" representation mediaType="avg/json"/>
+                </response>
+            </method>
+        </resource>
+
+    </resources>
+</application>
