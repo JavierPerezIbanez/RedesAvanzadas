@@ -37,7 +37,7 @@ bot.on('message', async (msg) => {
     obtenerDatosDelSensorUltimosSeg(chatId,segs);
   }else if (messageText.startsWith('/actual_')){
     const aux = messageText.split('_');
-    const variable= parseInt(aux[1]);
+    const variable= aux[1];
     obtenerUltimoDatoVariable(chatId,variable);
   }
 
