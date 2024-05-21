@@ -74,8 +74,8 @@ async function obtenerUltimoDatoVariable(chatId, variable){
     if (variable.equals("co2")){
       msn = JSON.stringify(response.data.co2);
     }
-    console.log('Datos del sensor:', response.data.variable);
-    msn = JSON.stringify(response.data.variable);
+    /*console.log('Datos del sensor:', response.data.variable);
+    msn = JSON.stringify(response.data.variable);*/
     bot.sendMessage(chatId, msn);
 } catch (error) {
     console.error('Error al obtener los datos del sensor:', error);
