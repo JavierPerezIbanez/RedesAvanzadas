@@ -174,7 +174,7 @@ function prepareQuerys(time){
 }
 function prepareLast(){
     let baseQuery='from(bucket: "DataBucket") ' +
-        `|> range(start: -12h) ` +
+        `|> range(start: -12h, stop: now) ` +
         '|> filter(fn: (r) => r["_measurement"] == "sensor_data") ';
 
     let fluxQuery1=baseQuery+'|> filter(fn: (r) => r["_field"] == "co2") |> last()';
