@@ -22,21 +22,20 @@ const refillBucket = () => {
 
 // API endpoint to check the bucket's status
 app.get('/bucket', (req, res) => {
-
     res.json({
         bucketLimit: RATE_LIMIT,
         currentBucketSize: tokenBucket.length,
         bucket: tokenBucket
     });
 });
-app.use(ipfilter(ips, {mode: 'allow'}));
+
+app.use(ipfilter(ips, { mode: 'allow' }));
 // Middleware for rate limiting
 const rateLimitMiddleware = (req, res, next) => {
 
     if (tokenBucket.length > 0) {
         const token = tokenBucket.shift();
         console.log(`Token ${token} is consumed`);
-
         res.set('X-RateLimit-Remaining', tokenBucket.length);
         next();
     }
