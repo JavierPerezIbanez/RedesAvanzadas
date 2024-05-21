@@ -47,7 +47,7 @@ function wait(ms) {
 }
 
 var numReq = 1000;
-var tEspera = 400;
+var tEspera = 300;
 // Función asincrónica para enviar las solicitudes de manera secuencial
 async function enviarSolicitudes() {
   for (let i = 0; i < numReq; i++) {
