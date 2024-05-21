@@ -1,6 +1,5 @@
 const express = require('express');
 const httpProxy = require('http-proxy');
-const { CronJob } = require('cron');
 const ipfilter=require('ipfilter')
 const app = express();
 const proxy = httpProxy.createProxyServer();
@@ -8,6 +7,8 @@ const proxy = httpProxy.createProxyServer();
 const haProxyPort = 4000;
 
 const RATE_LIMIT = 600;
+//in ms
+const REFILL_RATE=500;
 
 const tokenBucket = [];
 
@@ -51,9 +52,7 @@ const rateLimitMiddleware = (req, res, next) => {
 app.use(rateLimitMiddleware);
 
 // Cron job to periodically refill the bucket
-const job = new CronJob('*/2 * * * * *', () => {
-    refillBucket();
-});
+setInterval(refillBucket,REFILL_RATE);
 
 app.all('*',ipfilter(ips, {mode: 'allow'}) ,(req, res) => {
     const target = `http://localhost:${haProxyPort}`;
@@ -67,7 +66,6 @@ const PORT = 3999;
 app.listen(PORT, () => {
     console.log('TokenBucket');
     console.log(`TokenBucket escuchando en el puerto ${PORT}`);
-    job.start();
 });
 
 module.exports = app;
