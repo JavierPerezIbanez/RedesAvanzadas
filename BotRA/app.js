@@ -73,13 +73,18 @@ async function obtenerUltimoDatoVariable(chatId, variable){
     const response = await axios.get(urlLast);
     if (variable === 'co2'){
       msn = JSON.stringify(response.data.co2);
+    }else if (variable === 'temperatura'){
+      msn = JSON.stringify(response.data.temperatura);
+    }else if (variable === 'humedad'){
+      msn = JSON.stringify(response.data.humedad);
+    }else if (variable === 'volatiles'){
+      msn = JSON.stringify(response.data.volatiles);
     }else{
       msn = JSON.stringify(response.data);
-    } 
-     
+    }  
     /*console.log('Datos del sensor:', response.data.variable);
     msn = JSON.stringify(response.data.variable);*/
-    bot.sendMessage(chatId, msn);
+    bot.sendMessage(chatId,"Datos actuaales de "+variable+" :" +msn);
 } catch (error) {
     console.error('Error al obtener los datos del sensor:', error);
 }
