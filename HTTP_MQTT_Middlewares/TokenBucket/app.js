@@ -29,7 +29,7 @@ app.get('/bucket', (req, res) => {
         bucket: tokenBucket
     });
 });
-
+app.use(ipfilter(ips, {mode: 'allow'}));
 // Middleware for rate limiting
 const rateLimitMiddleware = (req, res, next) => {
 
@@ -64,7 +64,7 @@ app.all('*',ipfilter(ips, {mode: 'allow'}) ,(req, res) => {
 
 
 const PORT = 3999;
-app.use(ipfilter(ips, {mode: 'allow'}));
+
 app.listen(PORT, () => {
     console.log('TokenBucket');
     console.log(`TokenBucket escuchando en el puerto ${PORT}`);
