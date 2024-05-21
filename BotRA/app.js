@@ -35,7 +35,7 @@ bot.on('message', async (msg) => {
     const aux = messageText.split('_');
     const segs= aux[1];
     obtenerDatosDelSensorUltimosSeg(chatId,segs);
-  }else if (messageText === '/actual'){
+  }else if (messageText.startsWith('/actual_')){
     const aux = messageText.split('_');
     const variable= parseInt(aux[1]);
     obtenerUltimoDatoVariable(chatId,variable);
@@ -70,8 +70,8 @@ async function obtenerDatosDelSensorUltimosSeg(chatId, segs){
 async function obtenerUltimoDatoVariable(chatId, variable){
   try {
     const response = await axios.get(urlLast);
-    console.log('Datos del sensor:', response.data);
-    const msn = JSON.stringify(response.data);
+    console.log('Datos del sensor:', response.data.variable);
+    const msn = JSON.stringify(response.data.variable);
     bot.sendMessage(chatId, msn);
 } catch (error) {
     console.error('Error al obtener los datos del sensor:', error);
