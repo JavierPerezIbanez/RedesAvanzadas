@@ -11,7 +11,7 @@ const RATE_LIMIT = 10;
 
 const tokenBucket = [];
 
-var ips = ['::ffff:127.0.0.1','::ffff:10.0.2.10','::ffff:10.0.2.11','10.0.2.12','::ffff:10.0.2.13'];
+var ips = ['127.0.0.1','::ffff:127.0.0.1','10.0.2.10','10.0.2.11','10.0.2.12','10.0.2.13'];
 
 // Function to refill the bucket
 const refillBucket = () => {
