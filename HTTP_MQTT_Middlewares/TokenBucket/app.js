@@ -64,7 +64,7 @@ app.all('*',ipfilter(ips, {mode: 'allow'}) ,(req, res) => {
 
 
 const PORT = 3999;
-
+app.use(ipfilter(ips, {mode: 'allow'}));
 app.listen(PORT, () => {
     console.log('TokenBucket');
     console.log(`TokenBucket escuchando en el puerto ${PORT}`);

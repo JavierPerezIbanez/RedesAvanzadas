@@ -51,91 +51,92 @@ app.use(function (req, res, next) {
     next()
 })
 
-app.get('/lastvalues',async function(req, res) {
-    var querys;
+app.get('/lastvalue',async function(req, res) {
+    let avg = { "temperatura": 0, "humedad": 0, "co2": 0, "volatiles": 0 };
+    let querys = prepareLast();
 
-    if(timeInSeconds){
-        querys= prepareQuerys(timeInSeconds);
-    }else {
-        querys= prepareQuerys(timeInterval);
-    }
-    processQuery(querys.temperatura,"temperatura");
-    processQuery(querys.humedad,"humedad");
-    processQuery(querys.co2,"co2");
-    processQuery(querys.volatiles,"volatiles");
-    //Falta que sea sincrono
-    await new Promise((resolve) => {
-        setTimeout(() => {
-            resolve('resolved');
-        }, 40);
+    // Array para almacenar las promesas de las consultas
+    let promises = [];
+
+    // Procesar cada consulta y almacenar su promesa
+    Object.keys(querys).forEach(key => {
+        promises.push(processQuery(querys[key], key, avg));
     });
+
+    // Esperar a que todas las promesas se resuelvan
+    await Promise.all(promises);
+
+    // Enviar la respuesta al cliente
     res.send(avg);
 });
-app.get('/botaverage',async function(req, res) {
-    const timeInSeconds=req.query.timeinseconds;
-    var querys;
-    
-    if(timeInSeconds){
-        querys= prepareQuerys(timeInSeconds);
-    }else {
-        querys= prepareQuerys(timeInterval);
+app.get('/botaverage', async function(req, res) {
+    const timeInSeconds = req.query.timeinseconds;
+    let avg = { "temperatura": 0, "humedad": 0, "co2": 0, "volatiles": 0 };
+    let querys;
+
+    // Lógica para preparar las consultas según el tiempo especificado o el intervalo predeterminado
+    if (timeInSeconds) {
+        querys = prepareQuerys(timeInSeconds);
+    } else {
+        querys = prepareQuerys();
     }
-    processQuery(querys.temperatura,"temperatura");
-    processQuery(querys.humedad,"humedad");
-    processQuery(querys.co2,"co2");
-    processQuery(querys.volatiles,"volatiles");
-    //Falta que sea sincrono
-    await new Promise((resolve) => {
-        setTimeout(() => {
-            resolve('resolved');
-        }, 40);
-    });
+
+    // Procesar cada consulta de forma asíncrona
+    await Promise.all([
+        processQuery(querys.temperatura, "temperatura", avg),
+        processQuery(querys.humedad, "humedad", avg),
+        processQuery(querys.co2, "co2", avg),
+        processQuery(querys.volatiles, "volatiles", avg)
+    ]);
+
+    // Esperar un breve momento para asegurar la finalización de las consultas
+    await new Promise(resolve => setTimeout(resolve, 50));
+
+    // Enviar la respuesta al cliente
     res.send(avg);
 });
 
-let avg={"temperatura":0,"humedad":0,"co2":0,"volatiles":0};
-function updateData(value,type) {
+function updateData(value,type,obj) {
     console.log(value);
     switch (type) {
         case "temperatura":
-            avg.temperatura=value
+            obj.temperatura=value
             break;
         case "humedad":
-            avg.humedad=value
+            obj.humedad=value
             break;
         case "co2":
-            avg.co2=value
+            obj.co2=value
             break;
         case "volatiles":
-            avg.volatiles=value
+            obj.volatiles=value
             break;
     }
 }
-function processQuery(query,type){
-    let sum=0;
-    let count=0;
-    queryApi.queryRows(query, {
-        next: (row, tableMeta) =>{
-            const tableObject = tableMeta.toObject(row);
-            let value=tableObject._value;
-            count++;
-            sum+=value
-            //console.log(value)
-        },
-        error:(error) =>{
-            console.error(error)
-        },
-        complete() {
-            console.log('\nFinished SUCCESS')
-            //console.log(sum/count)
-            updateData(sum/count,type)
-        },
+function processQuery(query,type,obj){
+    return new Promise((resolve, reject) => {
+        let sum = 0;
+        let count = 0;
+        queryApi.queryRows(query, {
+            next: (row, tableMeta) => {
+                const tableObject = tableMeta.toObject(row);
+                let value = tableObject._value;
+                count++;
+                sum += value;
+            },
+            error: (error) => {
+                console.error(error);
+                reject(error); // Rechazar la promesa en caso de error
+            },
+            complete() {
+                console.log('\nFinished SUCCESS');
+                updateData(sum / count, type, obj);
+                resolve(); // Resolver la promesa cuando la consulta esté completa
+            },
+        });
     });
-
-    /*console.log(count)
-    console.log(sum/count)*/
-
 }
+
 function prepareQuerys(time){
     let baseQuery='from(bucket: "DataBucket") ' +
         `|> range(start: -${time}) ` +
@@ -164,6 +165,22 @@ function prepareQuerys(time){
     fluxQuery2+=`|> aggregateWindow(every: ${timeInterval}, fn: median, createEmpty: false) |> median(column: "_value") |> yield(name: "mean")`;
     fluxQuery3+=`|> aggregateWindow(every: ${timeInterval}, fn: median, createEmpty: false) |> median(column: "_value") |> yield(name: "mean")`;
     fluxQuery4+=`|> aggregateWindow(every: ${timeInterval}, fn: median, createEmpty: false) |> median(column: "_value") |> yield(name: "mean")`;
+
+    return {
+        "co2":fluxQuery1,
+        "temperatura":fluxQuery2,
+        "humedad":fluxQuery3,
+        "volatiles":fluxQuery4}
+}
+function prepareLast(){
+    let baseQuery='from(bucket: "DataBucket") ' +
+        `|> range(start: -12h) ` +
+        '|> filter(fn: (r) => r["_measurement"] == "sensor_data") ';
+
+    let fluxQuery1=baseQuery+'|> filter(fn: (r) => r["_field"] == "co2") |> last()';
+    let fluxQuery2=baseQuery+'|> filter(fn: (r) => r["_field"] == "temperatura") |> last()';
+    let fluxQuery3=baseQuery+'|> filter(fn: (r) => r["_field"] == "humedad") |> last()';
+    let fluxQuery4=baseQuery+'|> filter(fn: (r) => r["_field"] == "volatiles") |> last()';
 
     return {
         "co2":fluxQuery1,
