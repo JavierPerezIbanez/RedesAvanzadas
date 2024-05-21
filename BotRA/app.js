@@ -69,9 +69,13 @@ async function obtenerDatosDelSensorUltimosSeg(chatId, segs){
 }
 async function obtenerUltimoDatoVariable(chatId, variable){
   try {
+    const msn="";
     const response = await axios.get(urlLast);
+    if (variable==="co2"){
+      msn = JSON.stringify(response.data.co2);
+    }
     console.log('Datos del sensor:', response.data.variable);
-    const msn = JSON.stringify(response.data.variable);
+    msn = JSON.stringify(response.data.variable);
     bot.sendMessage(chatId, msn);
 } catch (error) {
     console.error('Error al obtener los datos del sensor:', error);
