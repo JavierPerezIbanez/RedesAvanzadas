@@ -57,7 +57,7 @@ app.use(rateLimitMiddleware);
 //Job to periodically refill the bucket
 setInterval(refillBucket,REFILL_RATE);
 
-app.all('*',ipfilter(ips, {mode: 'allow'}) ,(req, res) => {
+app.all('*',(req, res) => {
     const target = `http://localhost:${haProxyPort}`;
     console.log(req.ip);
     proxy.web(req, res, { target });
