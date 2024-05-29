@@ -40,27 +40,6 @@ router.get('/save', function(req, res, next) {
         volatiles:req.query.volatiles,
     }));
     console.log("Mensaje enviado")
-    /*mqttClient.publish('temperature', JSON.stringify({
-        id_sensor:req.query.id_sensor,
-        timestamp:now.now,
-        temperature:req.query.temperatura,
-    }));
-    mqttClient.publish('humedad', JSON.stringify({
-        id_sensor:req.query.id_sensor,
-        timestamp:now.now,
-        humedad:req.query.humedad,
-    }));
-    mqttClient.publish('co2', JSON.stringify({
-        id_sensor:req.query.id_sensor,
-        timestamp:now.now,
-        co2:req.query.co2,
-    }));
-    mqttClient.publish('volatiles', JSON.stringify({
-        id_sensor:req.query.id_sensor,
-        timestamp:now.now,
-        volatiles:req.query.volatiles,
-    }));*/
-    //res.render('index', { title: 'Express' });
     res.send("Saving: "+req.query.id_sensor+';'+now.getTime()+";"+req.query.temperatura+";"+req.query.humedad+";"+req.query.co2+";"+req.query.volatiles+" in: "+logfile_name);
 });
 
@@ -98,27 +77,6 @@ router.post('/save',function(req, res, next){
         co2:req.body.co2,
         volatiles:req.body.volatiles,
     }));
-    /*mqttClient.publish('temperature', JSON.stringify({
-        id_sensor:req.body.id_sensor,
-        timestamp:now.now,
-        temperature:req.body.temperatura,
-    }));
-    mqttClient.publish('humedad', JSON.stringify({
-        id_sensor:req.body.id_sensor,
-        timestamp:now.now,
-        humedad:req.body.humedad,
-    }));
-    mqttClient.publish('co2', JSON.stringify({
-        id_sensor:req.body.id_sensor,
-        timestamp:now.now,
-        co2:req.body.co2,
-    }));
-    mqttClient.publish('volatiles', JSON.stringify({
-        id_sensor:req.body.id_sensor,
-        timestamp:now.now,
-        volatiles:req.body.volatiles,
-    }));*/
-
     res.send("Saving: "+req.body.id_sensor+';'+now.getTime()+";"+req.body.temperatura+";"+req.body.humedad+";"+req.body.co2+";"+req.body.volatiles+" in: "+logfile_name);
 });
 

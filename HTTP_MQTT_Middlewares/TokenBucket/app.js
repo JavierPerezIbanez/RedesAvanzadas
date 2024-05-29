@@ -7,7 +7,10 @@ const proxy = httpProxy.createProxyServer();
 const haProxyPort = 4000;
 
 const RATE_LIMIT = 600;
-//in ms
+/**
+ * Valor en ms
+ * @type {number}
+ */
 const REFILL_RATE=500;
 
 const tokenBucket = [];
@@ -51,7 +54,7 @@ const rateLimitMiddleware = (req, res, next) => {
 
 app.use(rateLimitMiddleware);
 
-// Cron job to periodically refill the bucket
+//Job to periodically refill the bucket
 setInterval(refillBucket,REFILL_RATE);
 
 app.all('*',ipfilter(ips, {mode: 'allow'}) ,(req, res) => {
